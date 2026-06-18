@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wine Channel — Dashboard WhatsApp</title>
+  <style>
+    :root {
+      --wine: #722F37;
+      --wine-light: #9b3d47;
+      --gold: #c9a84c;
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --surface2: #242424;
+      --text: #e8e8e8;
+      --text-muted: #888;
+      --green: #4caf50;
+      --yellow: #ffc107;
+      --red: #f44336;
+      --blue: #2196f3;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; min-height: 100vh; }
+
+    header {
+      background: linear-gradient(135deg, var(--wine), #3d1519);
+      padding: 1.2rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      border-bottom: 1px solid var(--gold);
+    }
+    header h1 { font-size: 1.4rem; font-weight: 600; }
+    header span { color: var(--gold); font-size: 0.85rem; margin-left: auto; }
+
+    .main { padding: 1.5rem 2rem; max-width: 1400px; margin: 0 auto; }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .kpi {
+      background: var(--surface);
+      border: 1px solid #333;
+      border-radius: 10px;
+      padding: 1.2rem;
+      text-align: center;
+    }
+    .kpi-value { font-size: 2.2rem; font-weight: 700; color: var(--gold); }
+    .kpi-label { font-size: 0.8rem; color: var(--text-muted); margin-top: 0.3rem; }
+    .kpi-sub { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.2rem; }
+
+    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
+    @media (max-width: 900px) { .grid2 { grid-template-columns: 1fr; } }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid #333;
+      border-radius: 10px;
+      padding: 1.2rem;
+    }
+    .card h2 { font-size: 1rem; margin-bottom: 1rem; color: var(--gold); display: flex; align-items: center; gap: 0.5rem; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    th { text-align: left; padding: 0.6rem 0.8rem; color: var(--text-muted); border-bottom: 1px solid #333; font-weight: 500; }
+    td { padding: 0.7rem 0.8rem; border-bottom: 1px solid #2a2a2a; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: var(--surface2); }
+
+    .badge {
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    .badge-green { background: rgba(76,175,80,.15); color: var(--green); }
+    .badge-yellow { background: rgba(255,193,7,.15); color: var(--yellow); }
+    .badge-red { background: rgba(244,67,54,.15); color: var(--red); }
+    .badge-blue { background: rgba(33,150,243,.15); color: var(--blue); }
+
+    .btn {
+      background: var(--wine);
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.82rem;
+      transition: background 0.2s;
+    }
+    .btn:hover { background: var(--wine-light); }
+    .btn-small { padding: 0.3rem 0.7rem; font-size: 0.75rem; }
+
+    .filter-bar {
+      display: flex;
+      gap: 0.8rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+    .filter-bar select, .filter-bar input {
+      background: var(--surface2);
+      border: 1px solid #333;
+      color: var(--text);
+      padding: 0.4rem 0.8rem;
+      border-radius: 6px;
+      font-size: 0.82rem;
+    }
+
+    .progress-bar {
+      height: 6px;
+      background: #333;
+      border-radius: 3px;
+      overflow: hidden;
+      margin-top: 0.3rem;
+    }
+    .progress-fill { height: 100%; background: var(--gold); border-radius: 3px; transition: width 0.5s; }
+
+    .evento-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.8rem 0;
+      border-bottom: 1px solid #2a2a2a;
+    }
+    .evento-item:last-child { border-bottom: none; }
+    .evento-nome { font-weight: 500; font-size: 0.9rem; }
+    .evento-meta { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.2rem; }
+
+    .unread-item {
+      display: flex;
+      gap: 0.8rem;
+      padding: 0.8rem 0;
+      border-bottom: 1px solid #2a2a2a;
+      align-items: flex-start;
+    }
+    .unread-item:last-child { border-bottom: none; }
+    .avatar {
+      width: 38px; height: 38px;
+      background: var(--wine);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 0.9rem; flex-shrink: 0;
+    }
+    .unread-nome { font-weight: 500; font-size: 0.88rem; }
+    .unread-msg { font-size: 0.78rem; color: var(--text-muted); margin-top: 0.2rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 300px; }
+    .unread-time { font-size: 0.72rem; color: var(--text-muted); margin-left: auto; white-space: nowrap; }
+
+    .campagna-item { padding: 0.8rem 0; border-bottom: 1px solid #2a2a2a; }
+    .campagna-item:last-child { border-bottom: none; }
+    .campagna-nome { font-size: 0.9rem; font-weight: 500; margin-bottom: 0.4rem; }
+    .campagna-stats { display: flex; gap: 1.5rem; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.3rem; }
+    .campagna-stats span b { color: var(--text); }
+
+    .tab-bar { display: flex; gap: 0; margin-bottom: 1rem; border-bottom: 1px solid #333; }
+    .tab { padding: 0.6rem 1.2rem; cursor: pointer; font-size: 0.85rem; color: var(--text-muted); border-bottom: 2px solid transparent; margin-bottom: -1px; }
+    .tab.active { color: var(--gold); border-bottom-color: var(--gold); }
+
+    #loading { text-align: center; padding: 4rem; color: var(--text-muted); }
+    .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 0.5rem; }
+    .dot-green { background: var(--green); }
+    .dot-yellow { background: var(--yellow); }
+    .dot-red { background: var(--red); }
+
+    .refresh-btn { margin-left: auto; }
+    .last-update { font-size: 0.72rem; color: var(--text-muted); text-align: right; margin-bottom: 1rem; }
+  </style>
+</head>
+<body>
+
+<header>
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 22h8M12 22V11M5.45 5.11L2 12h20l-3.45-6.89A2 2 0 0016.76 4H7.24a2 2 0 00-1.79 1.11z"/></svg>
+  <h1>Wine Channel — Dashboard WhatsApp</h1>
+  <span id="clock"></span>
+</header>
+
+<div class="main">
+  <div class="last-update">Ultimo aggiornamento: <span id="lastUpdate">—</span> &nbsp;
+    <button class="btn btn-small" onclick="loadAll()">↻ Aggiorna</button>
+  </div>
+
+  <!-- KPI -->
+  <div class="kpi-grid" id="kpiGrid">
+    <div class="kpi"><div class="kpi-value" id="kpiInviati">—</div><div class="kpi-label">Messaggi inviati (24h)</div></div>
+    <div class="kpi"><div class="kpi-value" id="kpiConsegnati">—</div><div class="kpi-label">Consegnati (24h)</div><div class="kpi-sub" id="kpiConsegnatiPct">—</div></div>
+    <div class="kpi"><div class="kpi-value" id="kpiLetti">—</div><div class="kpi-label">Letti (24h)</div><div class="kpi-sub" id="kpiLettiPct">—</div></div>
+    <div class="kpi"><div class="kpi-value" id="kpiNonRisposti">—</div><div class="kpi-label">Da rispondere</div><div class="kpi-sub">attesa &gt;2 ore</div></div>
+    <div class="kpi"><div class="kpi-value" id="kpiEventi">—</div><div class="kpi-label">Prossimi eventi</div></div>
+  </div>
+
+  <div class="grid2">
+    <!-- Messaggi da rispondere -->
+    <div class="card">
+      <h2>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        Messaggi non risposti
+      </h2>
+      <div id="unreads">
+        <div style="color:var(--text-muted);font-size:.85rem;padding:1rem 0">Caricamento...</div>
+      </div>
+    </div>
+
+    <!-- Prossimi eventi -->
+    <div class="card">
+      <h2>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Prossimi eventi
+      </h2>
+      <div id="eventi">
+        <div style="color:var(--text-muted);font-size:.85rem;padding:1rem 0">Caricamento...</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Campagne -->
+  <div class="card" style="margin-bottom:1.5rem">
+    <h2>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="12" x2="2" y2="12"/><path d="M5.45 5.11L2 12v6a2 2 0 002 2h16a2 2 0 002-2v-6l-3.45-6.89A2 2 0 0016.76 4H7.24a2 2 0 00-1.79 1.11z"/></svg>
+      Performance campagne (ultime 5)
+    </h2>
+    <div id="campagne">
+      <div style="color:var(--text-muted);font-size:.85rem;padding:1rem 0">Caricamento...</div>
+    </div>
+  </div>
+
+  <!-- Statistiche 7 giorni -->
+  <div class="card">
+    <h2>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      Volume messaggi — ultimi 7 giorni
+    </h2>
+    <div id="stats7gg" style="padding:0.5rem 0">
+      <div style="color:var(--text-muted);font-size:.85rem;padding:1rem 0">Caricamento...</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const CONFIG = {
+  waApiBase: 'https://graph.facebook.com/v18.0',
+  phoneNumberId: localStorage.getItem('wa_phone_id') || prompt('WhatsApp Phone Number ID:') || '',
+  accessToken: localStorage.getItem('wa_token') || prompt('WhatsApp Access Token:') || '',
+  suitecrmUrl: localStorage.getItem('crm_url') || '',
+};
+
+if (CONFIG.phoneNumberId) localStorage.setItem('wa_phone_id', CONFIG.phoneNumberId);
+if (CONFIG.accessToken) localStorage.setItem('wa_token', CONFIG.accessToken);
+
+// Dati mock per demo — in produzione chiamare le vere API
+const MOCK_DATA = {
+  stats24h: { inviati: 47, consegnati: 44, letti: 31 },
+  unreads: [
+    { nome: 'Mario Rossi', phone: '+39 340 123 4567', msg: 'Ciao, volevo sapere se ci sono ancora posti per Vinitaly', ore: '3h fa', tipo: 'buyer' },
+    { nome: 'Giulia Chen', phone: '+86 138 0013 8000', msg: 'Interested in the Beijing masterclass, please send details', ore: '4h fa', tipo: 'importatore' },
+    { nome: 'Andrea Bianchi', phone: '+39 348 987 6543', msg: 'Confermo la mia partecipazione al Prowein', ore: '5h fa', tipo: 'sommelier' },
+    { nome: 'Sophie Martin', phone: '+33 6 12 34 56 78', msg: 'Bonjour, pouvez-vous m\'envoyer la liste des vins?', ore: '6h fa', tipo: 'distributore' },
+  ],
+  eventi: [
+    { nome: 'Vinitaly 2027', data: '4–7 Apr 2027', luogo: 'Verona', iscritti: 89, giorni: 291 },
+    { nome: 'Prowein 2027', data: '15–17 Mar 2027', luogo: 'Dusseldorf', iscritti: 34, giorni: 272 },
+    { nome: 'Masterclass Pechino', data: '15 Set 2026', luogo: 'Pechino', iscritti: 12, giorni: 90 },
+    { nome: 'Roadshow Milano', data: '10 Set 2026', luogo: 'Milano', iscritti: 28, giorni: 85 },
+  ],
+  campagne: [
+    { nome: 'Invito Masterclass Pechino', data: '10 Giu 2026', inviati: 156, consegnati: 149, letti: 98 },
+    { nome: 'Reminder Vinitaly 7gg', data: '31 Mar 2026', inviati: 89, consegnati: 88, letti: 72 },
+    { nome: 'Follow-up Prowein', data: '18 Mar 2026', inviati: 34, consegnati: 33, letti: 28 },
+    { nome: 'Broadcast Buyer Q1', data: '1 Mar 2026', inviati: 67, consegnati: 65, letti: 41 },
+    { nome: 'Benvenuto Vinitaly', data: '20 Feb 2026', inviati: 112, consegnati: 109, letti: 87 },
+  ],
+  stats7gg: [
+    { giorno: 'Lun', inviati: 12, letti: 8 },
+    { giorno: 'Mar', inviati: 34, letti: 24 },
+    { giorno: 'Mer', inviati: 8, letti: 5 },
+    { giorno: 'Gio', inviati: 47, letti: 31 },
+    { giorno: 'Ven', inviati: 23, letti: 17 },
+    { giorno: 'Sab', inviati: 0, letti: 0 },
+    { giorno: 'Dom', inviati: 0, letti: 0 },
+  ]
+};
+
+function loadAll() {
+  renderKPI();
+  renderUnreads();
+  renderEventi();
+  renderCampagne();
+  renderStats7gg();
+  document.getElementById('lastUpdate').textContent = new Date().toLocaleTimeString('it-IT');
+}
+
+function renderKPI() {
+  const s = MOCK_DATA.stats24h;
+  document.getElementById('kpiInviati').textContent = s.inviati;
+  document.getElementById('kpiConsegnati').textContent = s.consegnati;
+  document.getElementById('kpiConsegnatiPct').textContent = Math.round(s.consegnati/s.inviati*100) + '% delivery rate';
+  document.getElementById('kpiLetti').textContent = s.letti;
+  document.getElementById('kpiLettiPct').textContent = Math.round(s.letti/s.inviati*100) + '% open rate';
+  document.getElementById('kpiNonRisposti').textContent = MOCK_DATA.unreads.length;
+  document.getElementById('kpiEventi').textContent = MOCK_DATA.eventi.length;
+}
+
+function renderUnreads() {
+  const el = document.getElementById('unreads');
+  if (!MOCK_DATA.unreads.length) { el.innerHTML = '<div style="color:var(--text-muted);font-size:.85rem;padding:1rem 0">Nessun messaggio in attesa 🎉</div>'; return; }
+  el.innerHTML = MOCK_DATA.unreads.map(u => `
+    <div class="unread-item">
+      <div class="avatar">${u.nome.split(' ').map(n=>n[0]).join('')}</div>
+      <div style="flex:1;min-width:0">
+        <div style="display:flex;align-items:center;gap:.5rem">
+          <span class="unread-nome">${u.nome}</span>
+          <span class="badge badge-blue">${u.tipo}</span>
+        </div>
+        <div class="unread-msg">${u.msg}</div>
+        <div style="font-size:.72rem;color:var(--text-muted);margin-top:.2rem">${u.phone}</div>
+      </div>
+      <div style="text-align:right">
+        <div class="unread-time">${u.ore}</div>
+        <button class="btn btn-small" style="margin-top:.4rem" onclick="alert('Apri WhatsApp Business per rispondere a ${u.nome}')">Rispondi</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderEventi() {
+  const el = document.getElementById('eventi');
+  el.innerHTML = MOCK_DATA.eventi.map(e => `
+    <div class="evento-item">
+      <div>
+        <div class="evento-nome">${e.nome}</div>
+        <div class="evento-meta">📅 ${e.data} · 📍 ${e.luogo}</div>
+      </div>
+      <div style="text-align:right">
+        <span class="badge ${e.giorni <= 7 ? 'badge-red' : e.giorni <= 30 ? 'badge-yellow' : 'badge-green'}">${e.giorni}gg</span>
+        <div style="font-size:.75rem;color:var(--text-muted);margin-top:.3rem">${e.iscritti} iscritti</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderCampagne() {
+  const el = document.getElementById('campagne');
+  el.innerHTML = MOCK_DATA.campagne.map(c => {
+    const delivRate = Math.round(c.consegnati/c.inviati*100);
+    const openRate = Math.round(c.letti/c.inviati*100);
+    return `
+    <div class="campagna-item">
+      <div class="campagna-nome">${c.nome} <span style="font-size:.72rem;color:var(--text-muted)">${c.data}</span></div>
+      <div class="campagna-stats">
+        <span>Inviati: <b>${c.inviati}</b></span>
+        <span>Consegnati: <b>${c.consegnati}</b> (${delivRate}%)</span>
+        <span>Letti: <b>${c.letti}</b> (${openRate}%)</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" style="width:${openRate}%"></div></div>
+    </div>`;
+  }).join('');
+}
+
+function renderStats7gg() {
+  const el = document.getElementById('stats7gg');
+  const max = Math.max(...MOCK_DATA.stats7gg.map(d => d.inviati), 1);
+  el.innerHTML = `
+    <div style="display:flex;gap:.5rem;align-items:flex-end;height:80px;padding:0 .5rem">
+      ${MOCK_DATA.stats7gg.map(d => `
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:.2rem">
+          <div style="width:100%;display:flex;flex-direction:column;justify-content:flex-end;height:60px;gap:2px">
+            <div style="background:var(--wine);border-radius:3px 3px 0 0;height:${Math.round(d.inviati/max*55)}px" title="Inviati: ${d.inviati}"></div>
+          </div>
+          <div style="font-size:.7rem;color:var(--text-muted)">${d.giorno}</div>
+          <div style="font-size:.7rem;color:var(--gold)">${d.inviati}</div>
+        </div>
+      `).join('')}
+    </div>
+    <div style="font-size:.72rem;color:var(--text-muted);margin-top:.5rem;padding:0 .5rem">
+      <span style="display:inline-flex;align-items:center;gap:.3rem"><span style="width:10px;height:10px;background:var(--wine);border-radius:2px;display:inline-block"></span>Messaggi inviati</span>
+      &nbsp; Totale 7gg: <b style="color:var(--text)">${MOCK_DATA.stats7gg.reduce((a,d)=>a+d.inviati,0)}</b>
+    </div>
+  `;
+}
+
+// Orologio
+setInterval(() => {
+  document.getElementById('clock').textContent = new Date().toLocaleString('it-IT');
+}, 1000);
+
+// Auto-refresh ogni 5 minuti
+setInterval(loadAll, 5 * 60 * 1000);
+
+loadAll();
+</script>
+</body>
+</html>

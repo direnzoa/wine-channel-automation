@@ -1,0 +1,37 @@
+{
+  "name": "followup_post_evento",
+  "language": "it",
+  "category": "MARKETING",
+  "components": [
+    {
+      "type": "HEADER",
+      "format": "TEXT",
+      "text": "Grazie per esserci stato! 🙏"
+    },
+    {
+      "type": "BODY",
+      "text": "Ciao {{1}},\n\ngrazie per aver partecipato a *{{2}}*! È stato un grande piacere averti con noi.\n\n📁 *Materiali dell'evento* (schede tecniche vini, foto):\n{{3}}\n\nSe hai domande sui vini presentati o vuoi approfondire, siamo qui. Alla prossima occasione!",
+      "example": {
+        "body_text": [["Mario", "Vinitaly 2026", "https://materiali.winechannel.it/vinitaly2026"]]
+      }
+    },
+    {
+      "type": "FOOTER",
+      "text": "Wine Channel | eventi@winechannel.it"
+    },
+    {
+      "type": "BUTTONS",
+      "buttons": [
+        {
+          "type": "URL",
+          "text": "Vedi materiali",
+          "url": "{{3}}"
+        }
+      ]
+    }
+  ],
+  "_meta": {
+    "variabili": ["{{1}} = nome", "{{2}} = nome_evento", "{{3}} = link_materiali"],
+    "workflow": "Workflow C — Follow-up post evento"
+  }
+}

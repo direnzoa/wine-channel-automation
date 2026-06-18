@@ -1,0 +1,27 @@
+{
+  "name": "reminder_evento_7gg",
+  "language": "it",
+  "category": "UTILITY",
+  "components": [
+    {
+      "type": "HEADER",
+      "format": "TEXT",
+      "text": "📅 Mancano 7 giorni all'evento"
+    },
+    {
+      "type": "BODY",
+      "text": "Ciao {{1}},\n\nti ricordiamo che tra *7 giorni* si terrà:\n\n🍷 *{{2}}*\n📅 Data: {{3}}\n📍 Luogo: {{4}}\n\nSe hai bisogno di informazioni aggiuntive o vuoi confermare la tua partecipazione, rispondi a questo messaggio.",
+      "example": {
+        "body_text": [["Mario", "Vinitaly 2026", "7 Aprile 2026", "Verona, Quartiere Fieristico"]]
+      }
+    },
+    {
+      "type": "FOOTER",
+      "text": "Wine Channel — a presto!"
+    }
+  ],
+  "_meta": {
+    "variabili": ["{{1}} = nome", "{{2}} = nome_evento", "{{3}} = data", "{{4}} = luogo"],
+    "workflow": "Workflow B — Reminder 7 giorni"
+  }
+}

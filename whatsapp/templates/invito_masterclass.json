@@ -1,0 +1,40 @@
+{
+  "name": "invito_masterclass",
+  "language": "it",
+  "category": "MARKETING",
+  "components": [
+    {
+      "type": "HEADER",
+      "format": "TEXT",
+      "text": "🍷 Invito esclusivo — Masterclass Wine Channel"
+    },
+    {
+      "type": "BODY",
+      "text": "Ciao {{1}},\n\nsiamo lieti di invitarti alla nostra prossima masterclass:\n\n✨ *{{2}}*\n📅 Data: {{3}}\n💺 Posti disponibili: *{{4}}*\n\nUn'occasione unica per approfondire la conoscenza dei migliori vini italiani con esperti del settore.\n\nRispondi *SÌ* per confermare la tua partecipazione o contattaci per maggiori informazioni.",
+      "example": {
+        "body_text": [["Mario", "I Grandi Nebbioli d'Italia", "15 Settembre 2026 — Pechino", "8"]]
+      }
+    },
+    {
+      "type": "FOOTER",
+      "text": "Wine Channel | Posti limitati"
+    },
+    {
+      "type": "BUTTONS",
+      "buttons": [
+        {
+          "type": "QUICK_REPLY",
+          "text": "Confermo partecipazione"
+        },
+        {
+          "type": "QUICK_REPLY",
+          "text": "Voglio più info"
+        }
+      ]
+    }
+  ],
+  "_meta": {
+    "variabili": ["{{1}} = nome", "{{2}} = tema_masterclass", "{{3}} = data", "{{4}} = posti_disponibili"],
+    "workflow": "Workflow E — Broadcast / invio manuale"
+  }
+}

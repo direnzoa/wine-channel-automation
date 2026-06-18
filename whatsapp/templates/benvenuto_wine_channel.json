@@ -1,0 +1,28 @@
+{
+  "name": "benvenuto_wine_channel",
+  "language": "it",
+  "category": "MARKETING",
+  "components": [
+    {
+      "type": "HEADER",
+      "format": "TEXT",
+      "text": "Benvenuto in Wine Channel 🍷"
+    },
+    {
+      "type": "BODY",
+      "text": "Ciao {{1}},\n\nbenvenuto nella community Wine Channel! Siamo specializzati nell'organizzazione di eventi enologici d'eccellenza: fiere internazionali, roadshow e masterclass.\n\nIl nostro prossimo appuntamento: *{{2}}*\n\nSaremo felici di aggiornarti su tutti i nostri eventi. Non esitare a scriverci per qualsiasi informazione.",
+      "example": {
+        "body_text": [["Mario", "Masterclass Pechino 2026"]]
+      }
+    },
+    {
+      "type": "FOOTER",
+      "text": "Wine Channel | eventi@winechannel.it"
+    }
+  ],
+  "_meta": {
+    "variabili": ["{{1}} = nome contatto", "{{2}} = nome prossimo evento"],
+    "workflow": "Workflow A — Benvenuto",
+    "note": "Richiede approvazione Meta prima dell'uso"
+  }
+}

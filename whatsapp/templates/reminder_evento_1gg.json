@@ -1,0 +1,27 @@
+{
+  "name": "reminder_evento_1gg",
+  "language": "it",
+  "category": "UTILITY",
+  "components": [
+    {
+      "type": "HEADER",
+      "format": "TEXT",
+      "text": "⏰ Domani è il grande giorno!"
+    },
+    {
+      "type": "BODY",
+      "text": "Ciao {{1}},\n\n*domani* ti aspettiamo a:\n\n🍷 *{{2}}*\n📅 {{3}}\n📍 {{4}}\n\nRicordati di portare il tuo biglietto/accredito. Ci vediamo lì!\n\nPer qualsiasi emergenza o informazione last minute, rispondi a questo messaggio.",
+      "example": {
+        "body_text": [["Mario", "Vinitaly 2026", "7 Aprile 2026", "Verona, Padiglione 7"]]
+      }
+    },
+    {
+      "type": "FOOTER",
+      "text": "Wine Channel — a domani! 🥂"
+    }
+  ],
+  "_meta": {
+    "variabili": ["{{1}} = nome", "{{2}} = nome_evento", "{{3}} = data", "{{4}} = luogo"],
+    "workflow": "Workflow B — Reminder 1 giorno"
+  }
+}

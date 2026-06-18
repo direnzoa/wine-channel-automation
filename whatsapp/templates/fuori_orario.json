@@ -1,0 +1,19 @@
+{
+  "name": "fuori_orario",
+  "language": "it",
+  "category": "UTILITY",
+  "components": [
+    {
+      "type": "BODY",
+      "text": "Grazie per averci scritto! 🍷\n\nIn questo momento siamo fuori dal nostro orario di disponibilità.\n\n🕐 *Orari:* Lunedì–Venerdì, 9:00–18:00\n\nRisponderemo al tuo messaggio al più presto durante il prossimo orario lavorativo.\n\nPer urgenze puoi scrivere a eventi@winechannel.it\n\nWine Channel"
+    },
+    {
+      "type": "FOOTER",
+      "text": "Risposta automatica — Wine Channel"
+    }
+  ],
+  "_meta": {
+    "variabili": "nessuna",
+    "workflow": "Workflow D — Ricezione messaggi (fuori orario)"
+  }
+}
