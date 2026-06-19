@@ -115,6 +115,24 @@ Expo App (da costruire)
 
 ---
 
+## Sviluppo su più macchine
+
+- **Ufficio**: `C:\Users\Admini\Desktop\Claude Code Projects\wine-channel-automation`
+- **Notebook**: `C:\Users\diren\Desktop\Claude Code Projects\wine-channel-automation`
+- **Repository**: https://github.com/direnzoa/wine-channel-automation.git
+- All'inizio di ogni sessione fare `git pull` per sincronizzare le ultime modifiche.
+
+---
+
+## Progetto correlato
+
+Il CRM vero e proprio (Next.js + Prisma) è nel repository separato **wine-channel-crm**:
+- Ufficio: `C:\Users\Admini\Desktop\Claude Code Projects\wine-channel-crm`
+- Notebook: `C:\Users\diren\Desktop\Claude Code Projects\wine-channel-crm`
+- Repository: https://github.com/direnzoa/wine-channel-crm.git
+
+---
+
 ## Note operative
 
 - Il progetto è interamente localizzato in **italiano**
