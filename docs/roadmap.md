@@ -84,15 +84,9 @@ App **Expo** (React Native) per iOS e Android — versione mobile del CRM per us
 
 ---
 
-## Fase 4 — Portale Web Clienti 🔨 Da costruire
+## Fase 4 — Portale Web Clienti ✅ Rimpiazzata dal CRM Web
 
-Portale su `winechannel.it` (WordPress o standalone) per i clienti finali.
-
-### Funzionalità previste
-- Area riservata per ogni cliente (login)
-- Visualizzazione eventi disponibili e iscrizione online
-- Download materiali (schede tecniche, listini)
-- Storico ordini / acquisti
+Questa fase è stata superata dalla realizzazione del **CRM Web** (Fase 1), che copre tutte le esigenze di gestione clienti, eventi e azioni commerciali in modo più completo e integrato.
 
 ---
 
